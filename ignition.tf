@@ -1,5 +1,5 @@
 locals {
-  ignition_observability_platform_cluster = <<EOF
+  ignition_observability_hub_cluster = <<EOF
 variant: fcos
 version: 1.3.0
 passwd:
@@ -29,7 +29,7 @@ systemd:
         [Service]
         TimeoutStartSec=0
         ExecStartPre=/usr/bin/podman pull ${var.grafana_image}
-        ExecStart=/usr/bin/podman run --pid=host --net="host" -v /etc/grafana/custom.ini:/custom.ini -p ${var.observability_platform_port}:3000 ${var.grafana_image} --config /custom.ini
+        ExecStart=/usr/bin/podman run --pid=host --net="host" -v /etc/grafana/custom.ini:/custom.ini -p ${var.observability_hub_port}:3000 ${var.grafana_image} --config /custom.ini
         User=grafana
         Group=grafana
         Restart=always
@@ -64,11 +64,11 @@ storage:
 EOF
 }
 
-data "ct_config" "observability_platform_cluster" {
+data "ct_config" "observability_hub_cluster" {
   strict       = true
   pretty_print = false
 
-  content      = local.ignition_observability_platform_cluster
+  content      = local.ignition_observability_hub_cluster
 }
 
 

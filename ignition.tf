@@ -45,6 +45,16 @@ storage:
       group:
         name: grafana
   files:
+    - path: /etc/zincati/config.d/90-disable-auto-updates.toml
+      mode: 0644 
+      user: 
+        name: root 
+      group: 
+        name: root 
+      contents: 
+        inline: | 
+          [updates]
+          enabled = false 
     # - path: /etc/grafana/custom.ini
     #   mode: 0744
     #   user:

@@ -5,7 +5,7 @@ resource "aws_security_group" "observability_hub_security_group" {
   vpc_id      = data.aws_vpc.vpc.id
   
   tags = {
-    Name                = "Observability Hub Server"
+    Name                = "Observability Hub Server security group."
     TerraformWorkspace  = terraform.workspace
     TerraformModule     = basename(abspath(path.module))
     TerraformRootModule = basename(abspath(path.root))
@@ -14,22 +14,11 @@ resource "aws_security_group" "observability_hub_security_group" {
 
 resource "aws_security_group_rule" "prometheus_metrics_egress" {
   type                     = "egress"
-  description              = "Prometheus metrics port used when configuring the source for the Dashboard."
+  description              = "Egress port used when connecting the observability hub with the metrics aggregator cluster."
   from_port                = var.prometheus_input_source_port
   to_port                  = var.prometheus_input_source_port
   protocol                 = "tcp"
   cidr_blocks              = [data.aws_vpc.vpc.cidr_block]
   security_group_id        = aws_security_group.observability_hub_security_group.id
 }
-
-resource "aws_security_group_rule" "fluentd_logs_egress_tcp" {
-  type                     = "ingress"
-  description              = "Used for sending out logs to the fluentd aggregator over tcp."
-  from_port                = var.obs_hub_port
-  to_port                  = var.obs_hub_port
-  protocol                 = "tcp"
-  cidr_blocks              = [data.aws_vpc.vpc.cidr_block]
-  security_group_id        = aws_security_group.observability_hub_security_group.id
-}
-
 

@@ -1,3 +1,7 @@
+
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
+
 data "aws_autoscaling_group" "observability_hub" {
     name = aws_autoscaling_group.observability_hub.name
 }
@@ -30,9 +34,6 @@ resource "aws_lb" "observability_hub" {
   }  
 }
 
-data "aws_region" "current" {}
-data "aws_caller_identity" "current" {}
-
 resource "aws_lb_listener" "observability_hub" {  
   load_balancer_arn  =  aws_lb.observability_hub.arn 
   port               =  var.obs_hub_port
@@ -60,7 +61,7 @@ resource "aws_lb_target_group" "observability_hub" {
   health_check {
      protocol = "TCP"
      port     = var.obs_hub_port
-     interval = 10
+     interval = 15
   }
 
   lifecycle {

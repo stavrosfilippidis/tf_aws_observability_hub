@@ -49,7 +49,7 @@ resource "aws_lb_target_group" "observability_hub" {
   name       = "observability-hub-${random_string.uid.result}"
   port       = var.obs_hub_port
   protocol   = "TCP"   
-  vpc_id     = data.aws_vpc.vpc.id
+  vpc_id     = var.vpc_id
   
   tags = {
       Name                = "NLB Target Group for the observability hub."

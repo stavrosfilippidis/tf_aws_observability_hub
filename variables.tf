@@ -20,16 +20,16 @@ variable "ami_id" {
   description = "The ami id specifying which Operating system to use."
 }
 
-variable "hosted_zone" {
-  type        =  string 
-  default     = "your_hosted_zone.internal"
-  description = "The route53 hosted zone where dns records reside in."
-}
+# variable "hosted_zone" {
+#   type        =  string 
+#   default     = "your_hosted_zone.internal"
+#   description = "The route53 hosted zone where dns records reside in."
+# }
 
-variable "dns_record_name" {
-  type        =  string 
-  description = "The route53 dns record name used attach the load balancer to the autoscaling group."
-}
+# variable "dns_record_name" {
+#   type        =  string 
+#   description = "The route53 dns record name used attach the load balancer to the autoscaling group."
+# }
 
 variable "instance_type" {
   type        = string

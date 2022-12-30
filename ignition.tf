@@ -13,10 +13,6 @@ passwd:
 %{endfor~}
     - name: grafana
       shell: /usr/sbin/nologin
-ignition:
-  config:
-    merge:
-     - source: ${var.fedora_core_config_path}
 systemd:
   units:
     - name: 'grafana.service'
@@ -29,7 +25,7 @@ systemd:
         [Service]
         TimeoutStartSec=0
         ExecStartPre=/usr/bin/podman pull ${var.grafana_image}
-        ExecStart=/usr/bin/podman run --pid=host --net="host" -v /etc/grafana/custom.ini:/custom.ini -p ${var.observability_hub_port}:3000 ${var.grafana_image} --config /custom.ini
+        ExecStart=/usr/bin/podman run --pid=host --net="host" -v /etc/grafana/custom.ini:/custom.ini -p ${var.obs_hub_port}:3000 ${var.grafana_image} --config /custom.ini
         User=grafana
         Group=grafana
         Restart=always
@@ -55,22 +51,6 @@ storage:
         inline: | 
           [updates]
           enabled = false 
-    # - path: /etc/grafana/custom.ini
-    #   mode: 0744
-    #   user:
-    #     name: grafana
-    #   group:
-    #     name: grafana
-    #   contents:
-    #     inline: |
-    #       [database]
-    #       type     = postgres
-    #       host     = ${var.database_host}
-    #       name     = ${var.database_name}
-    #       user     = ${var.database_role}
-    #       password = ${var.database_role_password}
-    #       ssl_mode = disable
-
 EOF
 }
 

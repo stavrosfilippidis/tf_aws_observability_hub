@@ -3,7 +3,7 @@ module "observability_platform_cluster" {
 
   vpc_id                            = data.aws_vpc.default.id
   subnet_ids                        = tolist(data.aws_subnet_ids.default.ids)
-  ssh_authorized_keys               = var.ssh_authorized_keys
+  authorized_key                    = var.authorized_key
 }
 
 data "aws_vpc" "default" {

@@ -16,7 +16,7 @@ variable "subnet_ids" {
 
 variable "ami_id" {
   type        = string
-  default     = "fedora-coreos-34.20210626.3.2-x86_64"
+  default     = "fedora-coreos-37.20221211.3.0-x86_64"
   description = "The ami id specifying which Operating system to use."
 }
 
@@ -56,10 +56,10 @@ variable "instance_min_count" {
   default     = 1
 }
 
-variable "ssh_authorized_keys" {
-  type        = list(string)
-  default     = []
-  description = "List of SSH public keys to authorized access on the core user of the Logs Aggregator."
+variable "authorized_key" {
+  type        = string
+  default     = ""
+  description = "SSH key used to grant access to the machine spawned with this configuration."
 }
 
 variable "obs_hub_port" {

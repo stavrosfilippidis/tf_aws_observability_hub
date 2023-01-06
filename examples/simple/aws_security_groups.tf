@@ -1,12 +1,22 @@
-# resource "aws_security_group_rule" "vpn_prometheus_egress" {
-#   type              = "egress"
-#   description       = "Used for egress traffic from the vpn to the database "
-#   from_port         = var.database_port
-#   to_port           = var.database_port
-#   protocol          = "tcp"
-#   cidr_blocks       = [data.aws_vpc.default.cidr_block]
-#   security_group_id = var.vpn_security_group_id
-# }
+resource "aws_security_group_rule" "node_exporter_ingress" {
+  type                     = "ingress"
+  description              = "Used for connecting to internet resources over https."
+  from_port                = 9100
+  to_port                  = 9100
+  protocol                 = "tcp"
+  cidr_blocks              = [data.aws_vpc.default.cidr_block] 
+  security_group_id        = module.observability_platform_cluster.observability_platform_security_group_id
+}
+
+resource "aws_security_group_rule" "prometheus_egress" {
+  type                     = "egress"
+  description              = "Prometheus Egress port to connect to and integrate the metrics into Grafana"
+  from_port                = 9090
+  to_port                  = 9090
+  protocol                 = "tcp"
+  cidr_blocks              = [data.aws_vpc.default.cidr_block] 
+  security_group_id        = module.observability_platform_cluster.observability_platform_security_group_id
+}
 
 resource "aws_security_group_rule" "https_egress" {
   type                     = "egress"

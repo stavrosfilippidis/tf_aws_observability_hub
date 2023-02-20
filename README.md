@@ -43,5 +43,5 @@ grafana_image
 
 ## Potential Implementation 
 
-
 ![alt_text](https://github.com/stavrosfilippidis/architecture_diagrams/blob/main/observability.svg)
+
